@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             background-color: #000; /* Black background */
             color: #fff; /* White text */
-            font-size: 24px; /* Fixed font size */
+            font-size: 16px; /* Fixed font size */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -33,7 +33,7 @@
         /* Heading style */
         .calculator h2 {
             margin-bottom: 20px;
-            font-size: 28px;
+            font-size: 20px;
         }
 
         /* Input fields style */
@@ -45,7 +45,7 @@
             border-radius: 5px;
             background-color: #333;
             color: #fff;
-            font-size: 24px;
+            font-size: 16px;
         }
 
         /* Button style */
@@ -56,35 +56,25 @@
             color: #fff;
             border: none;
             border-radius: 5px;
-            font-size: 24px;
+            font-size: 16px;
             cursor: pointer;
-            margin-bottom: 10px;
         }
 
         .calculator button:hover {
             background-color: #218838; /* Darker green on hover */
         }
 
-        /* Screenshot button style */
-        .calculator #screenshotBtn {
-            background-color: #007bff; /* Blue button */
-        }
-
-        .calculator #screenshotBtn:hover {
-            background-color: #0056b3; /* Darker blue on hover */
-        }
-
         /* Result display style */
         .result {
             margin-top: 20px;
-            font-size: 24px;
+            font-size: 18px;
             font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="calculator" id="calculator">
+    <div class="calculator">
         <h2>EMI Calculator</h2>
         <label for="loanAmount">Loan Amount (₹):</label>
         <input type="number" id="loanAmount" placeholder="Enter loan amount">
@@ -96,13 +86,10 @@
         <input type="number" id="loanTenure" placeholder="Enter loan tenure">
 
         <button onclick="calculateEMI()">Calculate EMI</button>
-        <button id="screenshotBtn">Capture Screenshot</button>
 
         <div class="result" id="result"></div>
     </div>
 
-    <!-- Include html2canvas library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script>
         function calculateEMI() {
             const loanAmount = parseFloat(document.getElementById('loanAmount').value);
@@ -119,20 +106,6 @@
 
             document.getElementById('result').innerText = `Your EMI is: ₹${emi.toFixed(2)}`;
         }
-
-        // Capture screenshot and allow download
-        document.getElementById('screenshotBtn').addEventListener('click', function () {
-            html2canvas(document.getElementById('calculator')).then(canvas => {
-                // Convert canvas to image
-                const imgData = canvas.toDataURL('image/png');
-
-                // Create a temporary link to download the image
-                const link = document.createElement('a');
-                link.href = imgData;
-                link.download = 'emi_calculation.png'; // File name for download
-                link.click();
-            });
-        });
     </script>
 
 </body>
