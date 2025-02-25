@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMI Calculator</title>
+    <style>
+        /* Set the body to fit a mobile screen (6.70 inches) */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000; /* Black background */
+            color: #fff; /* White text */
+            font-size: 16px; /* Fixed font size */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        /* Container for the calculator */
+        .calculator {
+            background-color: #222; /* Dark gray background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            width: 300px; /* Fixed width for mobile screen */
+            text-align: center;
+        }
+
+        /* Heading style */
+        .calculator h2 {
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        /* Input fields style */
+        .calculator input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #444;
+            border-radius: 5px;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        /* Button style */
+        .calculator button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745; /* Green button */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .calculator button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        /* Result display style */
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <h2>EMI Calculator</h2>
+        <label for="loanAmount">Loan Amount (₹):</label>
+        <input type="number" id="loanAmount" placeholder="Enter loan amount">
+
+        <label for="interestRate">Interest Rate (%):</label>
+        <input type="number" id="interestRate" placeholder="Enter interest rate">
+
+        <label for="loanTenure">Loan Tenure (months):</label>
+        <input type="number" id="loanTenure" placeholder="Enter loan tenure">
+
+        <button onclick="calculateEMI()">Calculate EMI</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateEMI() {
+            const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value);
+            const loanTenure = parseFloat(document.getElementById('loanTenure').value);
+
+            if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTenure)) {
+                document.getElementById('result').innerText = "Please enter valid numbers.";
+                return;
+            }
+
+            const monthlyInterestRate = (interestRate / 100) / 12;
+            const emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenure)) / (Math.pow(1 + monthlyInterestRate, loanTenure) - 1);
+
+            document.getElementById('result').innerText = `Your EMI is: ₹${emi.toFixed(2)}`;
+        }
+    </script>
+
+</body>
+</html>
