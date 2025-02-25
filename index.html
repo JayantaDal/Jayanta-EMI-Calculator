@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EMI Calculator</title>
+    <title>EMI Calculator with Down Payment</title>
     <style>
         /* Set the body to fit a mobile screen (6.70 inches) */
         body {
@@ -33,7 +33,7 @@
         /* Heading style */
         .calculator h2 {
             margin-bottom: 20px;
-            font-size: 28px;
+            font-size: 26px;
         }
 
         /* Input fields style */
@@ -58,6 +58,7 @@
             border-radius: 5px;
             font-size: 24px;
             cursor: pointer;
+            margin-bottom: 10px;
         }
 
         .calculator button:hover {
@@ -74,10 +75,13 @@
 </head>
 <body>
 
-    <div class="calculator">
-        <h2>EMI Calculator</h2>
+    <div class="calculator" id="calculator">
+        <h2>EMI Calculator with Down Payment</h2>
         <label for="loanAmount">Loan Amount (₹):</label>
         <input type="number" id="loanAmount" placeholder="Enter loan amount">
+
+        <label for="downPayment">Down Payment (₹):</label>
+        <input type="number" id="downPayment" placeholder="Enter down payment" value="0">
 
         <label for="interestRate">Interest Rate (%):</label>
         <input type="number" id="interestRate" placeholder="Enter interest rate">
@@ -92,18 +96,28 @@
 
     <script>
         function calculateEMI() {
+            // Get input values
             const loanAmount = parseFloat(document.getElementById('loanAmount').value);
+            const downPayment = parseFloat(document.getElementById('downPayment').value);
             const interestRate = parseFloat(document.getElementById('interestRate').value);
             const loanTenure = parseFloat(document.getElementById('loanTenure').value);
 
+            // Validate inputs
             if (isNaN(loanAmount) || isNaN(interestRate) || isNaN(loanTenure)) {
-                document.getElementById('result').innerText = "Please enter valid numbers.";
+                document.getElementById('result').innerText = "Please enter valid numbers for Loan Amount, Interest Rate, and Loan Tenure.";
                 return;
             }
 
-            const monthlyInterestRate = (interestRate / 100) / 12;
-            const emi = (loanAmount * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenure)) / (Math.pow(1 + monthlyInterestRate, loanTenure) - 1);
+            // If down payment is not provided, default to 0
+            const principal = loanAmount - (isNaN(downPayment) ? 0 : downPayment);
 
+            // Calculate monthly interest rate
+            const monthlyInterestRate = (interestRate / 100) / 12;
+
+            // Calculate EMI using the formula
+            const emi = (principal * monthlyInterestRate * Math.pow(1 + monthlyInterestRate, loanTenure)) / (Math.pow(1 + monthlyInterestRate, loanTenure) - 1);
+
+            // Display the result
             document.getElementById('result').innerText = `Your EMI is: ₹${emi.toFixed(2)}`;
         }
     </script>
